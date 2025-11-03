@@ -70,7 +70,7 @@ export default defineConfig(({ mode }) => ({
         navigateFallbackDenylist: [/^\/api/, /\.(png|jpg|jpeg|svg|webp|ico|css|js)$/],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/qmwyysbjhehkjzaovhcl\.supabase\.co\/.*/i,
+            urlPattern: /^https:\/\/dgfmfnnzovspmtwnjejr\.supabase\.co\/.*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'supabase-api',
