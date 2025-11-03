@@ -249,24 +249,20 @@ const Checkout = () => {
         user_id: user!.id,
         order_number: `EB-${Date.now()}`,
         total_amount: getFinalTotal(),
-        currency: 'NGE',
+        currency: 'NGN',
         status: 'pending',
         payment_status: 'pending',
         payment_method: 'paystack',
-        delivery_slot_id: selectedDeliverySlot,
         delivery_instructions: sanitizedNotes, // ✅ Sanitized
-        shipping_address: {
-          firstName: sanitizedFirstName,   // ✅ Sanitized
-          lastName: sanitizedLastName,     // ✅ Sanitized
-          email: form.email,               // ✅ HTML5 validated
-          phone: form.phone,               // ✅ Validated
-          address: sanitizedAddress,       // ✅ Sanitized & validated
-          city: sanitizedCity,             // ✅ Sanitized
-          state: sanitizedState,           // ✅ Sanitized
-          country: sanitizedCountry,       // ✅ Sanitized
-          postalCode: sanitizedPostalCode, // ✅ Sanitized
-          notes: sanitizedNotes            // ✅ Sanitized
-        }
+        shipping_address: sanitizedAddress,    // ✅ Sanitized & validated
+        shipping_city: sanitizedCity,          // ✅ Sanitized
+        shipping_country: sanitizedCountry,    // ✅ Sanitized
+        shipping_postal_code: sanitizedPostalCode, // ✅ Sanitized
+        notes: sanitizedNotes,                  // ✅ Sanitized
+        subtotal: getTotalPrice(),
+        tax: 0,
+        shipping: getShippingCost(),
+        discount: 0
       };
 
       const { data: order, error: orderError } = await supabase
@@ -281,6 +277,7 @@ const Checkout = () => {
       const orderItems = cartItems.map(item => ({
         order_id: order.id,
         product_id: item.product_id,
+        product_name: item.products?.name || 'Unknown Product',
         quantity: item.quantity,
         unit_price: item.products?.price || 0,
         total_price: (item.products?.price || 0) * item.quantity

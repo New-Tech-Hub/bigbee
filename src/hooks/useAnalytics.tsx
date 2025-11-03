@@ -20,7 +20,7 @@ export const useAnalytics = () => {
         .from('analytics_events')
         .insert({
           user_id: user.id,
-          event_type: event.event_type,
+          event_name: event.event_type,
           event_data: event.event_data || {}
         });
 
